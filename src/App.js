@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import logo from './logo.svg';
 import './App.css';
-import { fetchCountries, loadCachecCountries, setCountry } from './store/actions';
+import { fetchCountries, loadCachecCountries, setCountry, fieldChange, validateForm } from './store/actions';
 
 function App() {
   const formState = useSelector(state => state);
@@ -18,9 +18,22 @@ function App() {
     }
   }, []);
 
+  function handleChange(e) {
+    let {
+      name,
+      value
+    } = e.target;
+
+    dispatch(fieldChange(name, value));
+  }
+
   function handleSelect(e) {
-    console.log(e.target.value);
     dispatch(setCountry(e.target.value));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(validateForm());
   }
 
   return (
@@ -29,22 +42,31 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <main className="App-body">
-        <form className="App-form">
-          <label>Social Security Number</label>
-          <input type="text" placeholder="YYMMDD-XXXX" required />
-          <label>Phone Number</label>
-          <input type="text" placeholder="‭+46 70-000 00 00"required />
-          <label>Email</label>
-          <input type="email" placeholder="your@email.com" required />
+        <form className="App-form" onSubmit={handleSubmit} noValidate>
+          <div className="App-form-field">
+            <label>Social Security Number</label>
+            <input type="text" name="personNumber" placeholder="YYMMDD-XXXX" onChange={handleChange} />
+            {formState.errors.personNumber && <span className="App-form--error">{formState.errors.personNumber}</span>}
+          </div>
+          <div className="App-form-field">
+            <label>Phone Number</label>
+            <input type="text" name="phoneNumber" placeholder="‭000-000 00 00" onChange={handleChange} />
+            {formState.errors.phoneNumber && <span className="App-form--error">{formState.errors.phoneNumber}</span>}
+          </div>
+          <div className="App-form-field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="your@email.com" onChange={handleChange} />
+            {formState.errors.email && <span className="App-form--error">{formState.errors.email}</span>}
+          </div>
           <label>Country</label>
-          <select onChange={handleSelect} value={formState.selectedCountry}>
+          <select onChange={handleSelect} value={formState.country}>
             {
-              formState.countries.map( (country, index) => {
+              formState.countries.map((country, index) => {
                 return <option key={index} value={country.name}>{country.name}</option>
               })
             }
           </select>
-          <button type="submit">Submit</button>
+          <button type="submit" >Submit</button>
         </form>
       </main>
     </div>

@@ -2,26 +2,34 @@ import constants from './constants';
 
 const initialState = {
 	validForm: false,
-	validating: false,
+	errors: {},
 	personNumber: '',
 	phoneNumber: '',
 	email: '',
 	country: '',
   submitted: false,
-  selectedCountry: '',
 	countries: []
 };
 
 export default function formReducer(state = initialState, action) {
 	switch (action.type) {
-		case constants.VALIDATE:
+		case constants.FIELD_CHANGE:
 			return {
-				...state
+				...state,
+			  [action.payload.name]: action.payload.value
 			};
 
+		case constants.FORM_ERROR:
+			return {
+				...state,
+				errors: action.payload,
+				validForm: false,
+			};
 		case constants.VALID_FORM:
 			return {
-				...state
+				...state,
+				errors: {},
+				validForm: action.payload
 			};
 		case constants.FETCH_COUNTRIES:
 			return {
@@ -36,7 +44,7 @@ export default function formReducer(state = initialState, action) {
 		case constants.SET_COUNTRY:
 			return {
 				...state,
-				selectedCountry: action.payload
+				country: action.payload
 			};
 
 		default:

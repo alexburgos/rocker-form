@@ -80,9 +80,9 @@
   border-radius: 0;
   background-color: #fff;
   background-image: url('./arrow-down.svg');
-  background-size: 25px;
+  background-size: 20px;
   background-repeat: no-repeat;
-  background-position: 98% 45%;
+  background-position: 98% 50%;
   color: #444;
   cursor: pointer;
   font-size: 16px;
@@ -102,7 +102,7 @@
   border: 2px solid #07afdd;
 }
 
-.App-form select:-webkit-autofill,
+select:-webkit-autofill,
 select:-webkit-autofill:hover, 
 select:-webkit-autofill:focus {
   background-image: url('./arrow-down.svg') !important;

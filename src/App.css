@@ -65,6 +65,11 @@
   border: 2px solid #07afdd;
 }
 
+.App-form-field input.error {
+  box-shadow: 0 0 5px #ca2525;
+  border: 2px solid #ca2525;
+}
+
 .App-form-field input::placeholder {
   color: #666;
 }
@@ -95,6 +100,14 @@
 .App-form select:hover {
   box-shadow: 0 0 5px #07afdd;
   border: 2px solid #07afdd;
+}
+
+.App-form select:-webkit-autofill,
+select:-webkit-autofill:hover, 
+select:-webkit-autofill:focus {
+  background-image: url('./arrow-down.svg') !important;
+  background-color: transparent !important;
+  color: #444 !important
 }
 
 .App-form button {

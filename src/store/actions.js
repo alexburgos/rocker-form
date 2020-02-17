@@ -2,30 +2,29 @@ import constants from './constants';
 
 const PHONE_REGEX = /^((((0{2}?)|(\+){1})46)|0)7[\d]{8}/;
 const EMAIL_REGEX = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+const SSN_REGEX = /^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([\-|\+]{0,1})?(\d{3})(\d{0,1})$/;
 
 function testDate (year, month, day) {
-  month -= 1;
   const date = new Date(year, month, day);
-  return !('' + date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day);
+  return !(+date.getFullYear().toString().slice(2) !== +year || date.getMonth() !== +month || date.getDate() !== +day);
 };
 
 // validate Swedish person id number using checksum
 function isValidPersonNumber(personNumber) {
-  const reg = /^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([\-|\+]{0,1})?(\d{3})(\d{0,1})$/;
-  const match = reg.exec(personNumber);
+  personNumber = personNumber.replace(/\D/g, ""); // remove all non numeric characters
+  const personNumberArray = personNumber.split("")
+  .reverse()
+  .slice(0, 10);
 
-  personNumber = personNumber.replace(/\D/g, "")
-    .split("")
-    .reverse()
-    .slice(0, 10);
+  const match = personNumber.match(SSN_REGEX);
 
-  console.log(personNumber, match, testDate(match[2], match[3], match[4]));
+  if (personNumberArray.length !== 10 || personNumberArray.length > 10 || !match) return false;
 
-  if (personNumber.length !== 10) {
-    return false;
-  }
+  const validDate = testDate(match[2], match[3], match[4]);
 
-  var sum = personNumber
+  if (!validDate) return false;
+
+  var sum = personNumberArray
     .map((n) => Number(n))
     .reduce(function (previous, current, index) {
       if (index % 2) current *= 2;
@@ -37,13 +36,12 @@ function isValidPersonNumber(personNumber) {
 };
 
 function isValidPhoneNumber(phoneNumber) {
-  return phoneNumber.match(PHONE_REGEX) ? true : false;
+  return phoneNumber.replace(/(?!^\+)\D/g, "").match(PHONE_REGEX) ? true : false;
 }
 
 function isValidEmail(email) {
   return email.match(EMAIL_REGEX) ? true : false;
 }
-
 
 export function fieldChange(name, value) {
   return {
@@ -97,6 +95,8 @@ export function validateForm() {
         payload: formErrors
       })
     } else {
+      console.log('Success!');
+      // if this was a production app I would do something here to submit the form data
       return dispatch({
         type: constants.VALID_FORM,
         payload: true

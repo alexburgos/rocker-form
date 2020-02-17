@@ -8,7 +8,6 @@ function App() {
   const formState = useSelector(state => state);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     let cachedCountries = JSON.parse(localStorage.getItem('countries'));
     if (cachedCountries && cachedCountries.length > 0) {
@@ -45,17 +44,17 @@ function App() {
         <form className="App-form" onSubmit={handleSubmit} noValidate>
           <div className="App-form-field">
             <label>Social Security Number</label>
-            <input type="text" name="personNumber" placeholder="YYMMDD-XXXX" onChange={handleChange} />
+            <input type="text" name="personNumber" placeholder="YYMMDDXXXX/YYMMDD-XXXX" maxLength="12" onChange={handleChange} className={formState.errors.personNumber ? 'error' : ''} />
             {formState.errors.personNumber && <span className="App-form--error">{formState.errors.personNumber}</span>}
           </div>
           <div className="App-form-field">
             <label>Phone Number</label>
-            <input type="text" name="phoneNumber" placeholder="‭000-000 00 00" onChange={handleChange} />
+            <input type="text" name="phoneNumber" placeholder="‭07xxxxxxxxx" onChange={handleChange} className={formState.errors.phoneNumber ? 'error' : ''} />
             {formState.errors.phoneNumber && <span className="App-form--error">{formState.errors.phoneNumber}</span>}
           </div>
           <div className="App-form-field">
             <label>Email</label>
-            <input type="email" name="email" placeholder="your@email.com" onChange={handleChange} />
+            <input type="email" name="email" placeholder="your@email.com" onChange={handleChange} className={formState.errors.email ? 'error' : ''} />
             {formState.errors.email && <span className="App-form--error">{formState.errors.email}</span>}
           </div>
           <label>Country</label>

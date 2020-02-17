@@ -90,6 +90,7 @@
   background-color: #07afdd;
   border: 1px solid #07afdd;
   color: #fff;
+  cursor: pointer;
   font-size: 16px;
   margin-top: 20px;
   align-self: flex-end;

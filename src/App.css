@@ -12,7 +12,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-bounce infinite 3.5s linear;
+    animation: App-logo-bounce infinite 2.5s linear;
   }
 }
 
@@ -25,7 +25,7 @@
 }
 
 .App-body {
-  height: 70vh;
+  min-height: 70vh;
 }
 
 .App-form {
@@ -38,7 +38,7 @@
 }
 
 .App-form input {
-  border: 1px solid #ccc;
+  border: 2px solid #000;
   color: #444;
   font-size: 16px;
   margin: 10px 0 15px;
@@ -51,7 +51,7 @@
 
 .App-form input:hover {
   box-shadow: 0 0 5px #07afdd;
-  border: 1px solid #07afdd;
+  border: 2px solid #07afdd;
 }
 
 .App-form input::placeholder {
@@ -60,9 +60,13 @@
 
 .App-form select {
   appearance: none;
-  border: 1px solid #333;
+  border: 2px solid #000;
   border-radius: 0;
   background-color: #fff;
+  background-image: url('./arrow-down.svg');
+  background-size: 25px;
+  background-repeat: no-repeat;
+  background-position: 98% 45%;
   color: #444;
   cursor: pointer;
   font-size: 16px;
@@ -77,9 +81,9 @@
   transition: all 0.30s ease-in-out;
 }
 
-.App-form select :hover {
+.App-form select:hover {
   box-shadow: 0 0 5px #07afdd;
-  border: 1px solid #07afdd;
+  border: 2px solid #07afdd;
 }
 
 .App-form button {
@@ -93,12 +97,25 @@
   height: 40px;
 }
 
-@keyframes App-logo-bounce {
-  from {
-    transform: translateY(0);
+@media screen and (max-width: 768px) {
+  .App-form {
+    width: 100%;
+    padding: 0 20px;
   }
 
-  to {
+  .App-header {
+    min-height: 20vh;
+  }
+}
+
+@keyframes App-logo-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
     transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

@@ -1,5 +1,7 @@
 import constants from './constants';
 
+const PHONE_REGEX = /^((((0{2}?)|(\+){1})46)|0)7[\d]{8}/;
+
 export function fetchCountries() {
 	return async dispatch => {
 		let response = await fetch('https://restcountries.eu/rest/v2/all');

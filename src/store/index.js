@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import formReducer from './reducer';
+import formReducer from './reducers/index';
 
 const logger = createLogger({
   collapsed: true

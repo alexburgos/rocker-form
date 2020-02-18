@@ -1,14 +1,19 @@
-import constants from './constants';
+import constants from '../constants/index';
+
+const fieldsFromCache = JSON.parse(localStorage.getItem('formState'));
+const cachedCountries = JSON.parse(localStorage.getItem('countries'));
+
+console.log(fieldsFromCache, cachedCountries);
 
 const initialState = {
 	validForm: false,
 	errors: {},
-	personNumber: '',
-	phoneNumber: '',
-	email: '',
-	country: '',
+	personNumber: fieldsFromCache ? fieldsFromCache.personNumber : '',
+	phoneNumber: fieldsFromCache ? fieldsFromCache.phoneNumber : '',
+	email: fieldsFromCache ? fieldsFromCache.email : '',
+	country: fieldsFromCache ? fieldsFromCache.country : '',
   submitted: false,
-	countries: []
+	countries: cachedCountries ? cachedCountries : []
 };
 
 export default function formReducer(state = initialState, action) {
@@ -29,7 +34,8 @@ export default function formReducer(state = initialState, action) {
 			return {
 				...state,
 				errors: {},
-				validForm: action.payload
+				validForm: action.payload,
+				submitted: action.payload
 			};
 		case constants.FETCH_COUNTRIES:
 			return {

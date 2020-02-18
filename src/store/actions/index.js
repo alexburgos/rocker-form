@@ -1,5 +1,6 @@
-import constants from './constants';
+import constants from '../constants/index';
 
+/* eslint-disable no-useless-escape*/
 const PHONE_REGEX = /^((((0{2}?)|(\+){1})46)|0)7[\d]{8}/;
 const EMAIL_REGEX = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
 const SSN_REGEX = /^(\d{2}){0,1}(\d{2})(\d{2})(\d{2})([\-|\+]{0,1})?(\d{3})(\d{0,1})$/;
@@ -8,6 +9,8 @@ function testDate (year, month, day) {
   const date = new Date(year, month, day);
   return !(+date.getFullYear().toString().slice(2) !== +year || date.getMonth() !== +month || date.getDate() !== +day);
 };
+
+/* Validators */
 
 // validate Swedish person id number using checksum
 function isValidPersonNumber(personNumber) {
@@ -43,6 +46,8 @@ function isValidEmail(email) {
   return email.match(EMAIL_REGEX) ? true : false;
 }
 
+/* Actions */
+
 export function fieldChange(name, value) {
   return {
     type: constants.FIELD_CHANGE,
@@ -60,6 +65,11 @@ export function validateForm() {
 
     const formState = state();
     const fieldsToValidate = (({ phoneNumber, personNumber, email }) => ({ phoneNumber, personNumber, email }))(formState);
+
+    if (formState.country.length === 0) {
+      hasErrors = true;
+			formErrors.country = 'Please select a country.';
+    }
 
     for (let [key, value] of Object.entries(fieldsToValidate)) {
       if (key === 'email') {
@@ -106,6 +116,25 @@ export function validateForm() {
   }
 }
 
+export function cacheFormState() {
+  return (dispatch, state) => {
+    const formState = state();
+    const fieldsToCache = (({ phoneNumber, personNumber, email, country }) => ({
+			phoneNumber,
+			personNumber,
+      email,
+      country
+    }))(formState);
+    
+    localStorage.setItem('formState', JSON.stringify(fieldsToCache));
+
+		return dispatch({
+			type: constants.CACHE_FORM,
+			payload: ''
+		});
+  }
+}
+
 export function fetchCountries() {
   return async dispatch => {
     let response = await fetch('https://restcountries.eu/rest/v2/all');
@@ -117,13 +146,6 @@ export function fetchCountries() {
       type: constants.FETCH_COUNTRIES,
       payload: countries
     });
-  };
-}
-
-export function loadCachecCountries(countries) {
-  return {
-    type: constants.LOAD_CACHED_COUNTRIES,
-    payload: countries
   };
 }
 

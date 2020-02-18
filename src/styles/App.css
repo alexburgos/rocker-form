@@ -79,7 +79,7 @@
   border: 2px solid #000;
   border-radius: 0;
   background-color: #fff;
-  background-image: url('./arrow-down.svg');
+  background-image: url('../assets/arrow-down.svg');
   background-size: 20px;
   background-repeat: no-repeat;
   background-position: 98% 50%;
@@ -102,12 +102,9 @@
   border: 2px solid #07afdd;
 }
 
-select:-webkit-autofill,
-select:-webkit-autofill:hover, 
-select:-webkit-autofill:focus {
-  background-image: url('./arrow-down.svg') !important;
-  background-color: transparent !important;
-  color: #444 !important
+.App-form select.error {
+  border: 2px solid #ca2525;
+  box-shadow: 0 0 5px #ca2525;
 }
 
 .App-form button {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import logo from './assets/logo.svg';
 import './styles/App.css';
 import {
@@ -11,36 +11,33 @@ import {
 } from './store/actions/index';
 
 function App() {
-  const formState = useSelector(state => state);
-  const dispatch = useDispatch();
+	const formState = useSelector(state => state);
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (formState.countries.length === 0) dispatch(fetchCountries());
-  }, [dispatch]);
+	useEffect(() => {
+		if (formState.countries.length === 0) dispatch(fetchCountries());
+	}, [formState.countries.length, dispatch]);
 
-  function handleChange(e) {
-    let {
-      name,
-      value
-    } = e.target;
+	function handleChange(e) {
+		let { name, value } = e.target;
+		dispatch(fieldChange(name, value));
+	}
 
-    dispatch(fieldChange(name, value));
-  }
+	function handleBlur() {
+		dispatch(cacheFormState());
+	}
 
-  function handleBlur() {
-    dispatch(cacheFormState());
-  }
-
-  function handleSelect(e) {
+	function handleSelect(e) {
     dispatch(setCountry(e.target.value));
-  }
+    dispatch(cacheFormState());
+	}
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(validateForm());
-  }
+	function handleSubmit(e) {
+		e.preventDefault();
+		dispatch(validateForm());
+	}
 
-  return (
+	return (
 		<div className="App">
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />

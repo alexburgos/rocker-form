@@ -10,7 +10,7 @@ const initialState = {
 	phoneNumber: fieldsFromCache ? fieldsFromCache.phoneNumber : '',
 	email: fieldsFromCache ? fieldsFromCache.email : '',
 	country: fieldsFromCache ? fieldsFromCache.country : '',
-  submitted: false,
+	submitted: false,
 	countries: cachedCountries ? cachedCountries : []
 };
 
@@ -19,14 +19,14 @@ export default function formReducer(state = initialState, action) {
 		case constants.FIELD_CHANGE:
 			return {
 				...state,
-			  [action.payload.name]: action.payload.value
+				[action.payload.name]: action.payload.value
 			};
 
 		case constants.FORM_ERROR:
 			return {
 				...state,
 				errors: action.payload,
-				validForm: false,
+				validForm: false
 			};
 		case constants.VALID_FORM:
 			return {
@@ -36,11 +36,6 @@ export default function formReducer(state = initialState, action) {
 				submitted: action.payload
 			};
 		case constants.FETCH_COUNTRIES:
-			return {
-				...state,
-				countries: action.payload
-			};
-		case constants.LOAD_CACHED_COUNTRIES:
 			return {
 				...state,
 				countries: action.payload

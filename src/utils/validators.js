@@ -12,9 +12,9 @@ function testDate(year, month, day) {
 		+date
 			.getFullYear()
 			.toString()
-			.slice(2) !== +year ||
-		date.getMonth() !== +month ||
-		date.getDate() !== +day
+			.slice(2) !== Number(year) ||
+		date.getMonth() !== Number(month) ||
+		date.getDate() !== Number(day)
 	);
 }
 
@@ -51,7 +51,6 @@ export function isValidPersonNumber(personNumber) {
 
 export function isValidPhoneNumber(phoneNumber) {
 	phoneNumber = phoneNumber.replace(/(?!^\+)\D/g, '');
-	console.log(phoneNumber.length, phoneNumber.replace(/(^\+46)/g, '').length);
 	if (phoneNumber.replace(/(^\+46)/g, '').length > 11) return false;
 	return phoneNumber.replace(/(?!^\+)\D/g, '').match(PHONE_REGEX)
 		? true

@@ -3,8 +3,6 @@ import constants from '../constants/index';
 const fieldsFromCache = JSON.parse(localStorage.getItem('formState'));
 const cachedCountries = JSON.parse(localStorage.getItem('countries'));
 
-console.log(fieldsFromCache, cachedCountries);
-
 const initialState = {
 	validForm: false,
 	errors: {},

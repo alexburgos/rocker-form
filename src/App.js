@@ -70,7 +70,7 @@ function App() {
 						<input
 							type="text"
 							name="phoneNumber"
-							placeholder="‭07xxxxxxxxx"
+							placeholder="‭07xxxxxxxxx/+467xxxxxxxx"
 							maxLength="15"
 							value={formState.phoneNumber}
 							onChange={handleChange}

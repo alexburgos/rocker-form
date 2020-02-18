@@ -10,12 +10,6 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-bounce infinite 2.5s linear;
-  }
-}
-
 .App-header {
   min-height: 30vh;
   display: flex;
@@ -124,6 +118,13 @@
   margin-top: 10px;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-bounce infinite 2.5s linear;
+  }
+}
+
+
 @media screen and (max-width: 768px) {
   .App-form {
     width: 100%;
@@ -131,7 +132,7 @@
   }
 
   .App-header {
-    min-height: 20vh;
+    min-height: 10vh;
   }
 }
 
